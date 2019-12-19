@@ -1,6 +1,6 @@
 // Vanilla implementation has a lot of overhead.
 class VanillaNav extends HTMLElement {
-  constructor(props) {
+  constructor() {
     super();
     // Attributes are always passed in as strings
     const links = JSON.parse(this.getAttribute("links"));
@@ -24,13 +24,14 @@ class VanillaNav extends HTMLElement {
       <style>
         div {
           display: flex;
-          background: red;
+          background: papayawhip;
           padding: 12px;
         }
 
         button {
-          background: white;
-          color: green;
+          background: darkseagreen;
+          color: white;
+          font-size: 14px;
           border: none;
           padding-right: 10px;
         }
@@ -39,6 +40,49 @@ class VanillaNav extends HTMLElement {
 }
 
 customElements.define("vanilla-nav", VanillaNav);
+
+// Vanilla Dropdown
+class VanillaDropdown extends HTMLElement {
+  constructor() {
+    super();
+    // Attributes are always passed in as strings
+    const links = JSON.parse(this.getAttribute("links"));
+    this.links = [...links];
+    this.addEventListener("click", e =>
+      console.log(e.target.getAttribute("href"))
+    );
+  }
+  // Lifecycle method for the mounting of the component
+  connectedCallback() {
+    this.render();
+  }
+  render() {
+    // Mapping to the inner HTML will cause commas to be rendered if
+    // the Array's join method is not used.
+    const linkList = this.links
+      .map(({ label, path }) => `<button href="${path}">${label}</button>`)
+      .join("");
+
+    this.innerHTML = `<div>${linkList}</div>
+      <style>
+        div {
+          display: flex;
+          background: papayawhip;
+          padding: 12px;
+        }
+
+        button {
+          background: darkseagreen;
+          color: white;
+          font-size: 14px;
+          border: none;
+          padding-right: 10px;
+        }
+      </style>`;
+  }
+}
+
+customElements.define("vanilla-dropdown", VanillaDropdown);
 
 // Hybrids approach
 // https://hybrids.js.org/
@@ -68,13 +112,14 @@ export const HybridsNav = {
       <style>
         :host {
           display: flex;
-          background: red;
+          background: papayawhip;
           padding: 12px;
         }
 
         button {
-          background: white;
-          color: green;
+          background: darkseagreen;
+          color: white;
+          font-size: 14px;
           border: none;
           padding-right: 10px;
         }
