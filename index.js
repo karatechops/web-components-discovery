@@ -95,7 +95,9 @@ export function handleNavClick(path) {
 
 // Hybrids simpler and more functional approach to declaring components
 export const HybridsNav = {
+  // The attribute passed to the components is accepted via property
   links: property(navLinks => navLinks && JSON.parse(navLinks)),
+  // Similar render function to a React functional component.
   render: ({ links }) => {
     const navButtons =
       links &&
